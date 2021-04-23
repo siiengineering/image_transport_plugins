@@ -41,6 +41,9 @@
 #include <theora/theoraenc.h>
 #include <theora/theoradec.h>
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
+
 namespace theora_image_transport {
 
 class TheoraSubscriber : public image_transport::SimpleSubscriberPlugin<theora_image_transport::Packet>
@@ -80,6 +83,12 @@ protected:
   th_comment header_comment_;
   th_setup_info* setup_info_;
   sensor_msgs::ImagePtr latest_image_;
+  
+private:
+// If OpenCV4
+#if CV_VERSION_MAJOR > 3
+  const int CV_YCrCb2BGR = cv::COLOR_YCrCb2BGR;
+#endif  
 };
 
 } //namespace theora_image_transport

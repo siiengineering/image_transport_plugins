@@ -37,6 +37,11 @@
 #include <dynamic_reconfigure/server.h>
 #include <compressed_image_transport/CompressedSubscriberConfig.h>
 
+#include <opencv2/core/core.hpp>
+#include <opencv2/opencv.hpp>
+
+
+
 namespace compressed_image_transport {
 
 class CompressedSubscriber : public image_transport::SimpleSubscriberPlugin<sensor_msgs::CompressedImage>
@@ -68,6 +73,18 @@ protected:
   int imdecode_flag_;
 
   void configCb(Config& config, uint32_t level);
+  
+private:
+// If OpenCV4
+#if CV_VERSION_MAJOR > 3
+  const int CV_BGR2RGB = cv::COLOR_BGR2RGB;
+  const int CV_BGR2RGBA = cv::COLOR_BGR2RGBA;
+  const int CV_RGB2BGR = cv::COLOR_RGB2BGR;
+  const int CV_BGR2BGRA = cv::COLOR_BGR2BGRA;
+  const int CV_RGB2BGRA = cv::COLOR_RGB2BGRA;
+  const int CV_RGB2RGBA = cv::COLOR_RGB2RGBA;
+#endif
+
 };
 
 } //namespace image_transport
